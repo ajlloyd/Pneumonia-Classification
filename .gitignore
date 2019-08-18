@@ -1,0 +1,4 @@
+validation_data.pickle
+training_data.pickle
+testing_data.pickle
+chest_xray
