@@ -1,8 +1,5 @@
-import tensorflow as tf
-from tensorflow import keras
 import os
 import cv2
-import matplotlib.pyplot as plt
 import random
 import pickle
 import numpy as np
@@ -24,12 +21,14 @@ for ttv in os.listdir(root):                                                    
             new_array = cv2.resize(img_array,(100,100))
             data_set_img_arrays.append([new_array, img_class])
             print("image: {} complete".format(img))
+    np.random.shuffle(data_set_img_arrays)
     if ttv == "test":
         testing_data.append(data_set_img_arrays)
     elif ttv == "train":
         training_data.append(data_set_img_arrays)
     elif ttv == "val":
         validation_data.append(data_set_img_arrays)
+
 with open("./testing_data.pickle", 'wb') as file:
     pickle.dump(testing_data, file)
 with open("./training_data.pickle", 'wb') as file:
