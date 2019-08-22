@@ -3,6 +3,7 @@ import cv2
 import random
 import pickle
 import numpy as np
+import matplotlib.pyplot as plt
 
 root = "./chest_xray"
 
@@ -19,6 +20,8 @@ for ttv in os.listdir(root):                                                    
         for img in os.listdir(img_path):
             img_array = cv2.imread(os.path.join(img_path,img), cv2.IMREAD_GRAYSCALE)
             new_array = cv2.resize(img_array,(100,100))
+            #plt.imshow(new_array, cmap = plt.cm.binary)
+            #plt.show()
             data_set_img_arrays.append([new_array, img_class])
             print("image: {} complete".format(img))
     np.random.shuffle(data_set_img_arrays)
@@ -28,6 +31,7 @@ for ttv in os.listdir(root):                                                    
         training_data.append(data_set_img_arrays)
     elif ttv == "val":
         validation_data.append(data_set_img_arrays)
+
 
 with open("./testing_data.pickle", 'wb') as file:
     pickle.dump(testing_data, file)

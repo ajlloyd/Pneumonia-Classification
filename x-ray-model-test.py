@@ -8,6 +8,7 @@ import numpy as np
 import pickle
 import time
 from sklearn.metrics import accuracy_score
+import matplotlib.pyplot as plt
 
 test_data = pickle.load(open("testing_data.pickle", "rb"))
 def create_X_and_y(data):
@@ -20,11 +21,16 @@ def create_X_and_y(data):
     y = np.array(y)
     return X,y
 X_test, y_test = create_X_and_y(test_data)
+
+X_test = X_test / 255
 y_test = y_test.reshape(-1,1)
 
 model = tf.keras.models.load_model("64x2-CONV-NET.model")
 predict = model.predict([X_test])
-predict = predict.astype(int)
+np.place(predict, predict >= 0.5, [1])
+np.place(predict, predict < 0.5, [0])
+
+print(predict)
 
 print(accuracy_score(predict, y_test))
 # only 75.4% accuracy; however,skipped fine tuning due to data set size.
