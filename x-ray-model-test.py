@@ -7,10 +7,9 @@ from tensorflow.keras.metrics import Accuracy
 import numpy as np
 import pickle
 import time
-
+from sklearn.metrics import accuracy_score
 
 test_data = pickle.load(open("testing_data.pickle", "rb"))
-
 def create_X_and_y(data):
     X = []
     y = []
@@ -21,13 +20,11 @@ def create_X_and_y(data):
     y = np.array(y)
     return X,y
 X_test, y_test = create_X_and_y(test_data)
-
 y_test = y_test.reshape(-1,1)
 
 model = tf.keras.models.load_model("64x2-CONV-NET.model")
-
 predict = model.predict([X_test])
-print(predict)
+predict = predict.astype(int)
 
-"""from sklearn.metrics import accuracy_score
-print(accuracy_score(predict, y_test))"""
+print(accuracy_score(predict, y_test))
+# only 75.4% accuracy; however,skipped fine tuning due to data set size.
