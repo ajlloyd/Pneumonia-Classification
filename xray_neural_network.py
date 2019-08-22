@@ -24,10 +24,7 @@ def create_X_and_y(data):
     y = np.array(y)
     return X,y
 
-X_test, y_test = create_X_and_y(test_data)
 X_train, y_train = create_X_and_y(training_data)
-X_val, y_val = create_X_and_y(validation_data)
-
 X_train = tf.keras.utils.normalize(X_train, axis=1)
 
 model = Sequential()
@@ -46,3 +43,5 @@ model.compile(loss='binary_crossentropy',
               metrics=['accuracy'])
 
 model.fit(X_train, y_train, batch_size=30, epochs=5, validation_split=0.2, callbacks=[tensorboard])
+
+model.save("64x2-CONV-NET.model")
